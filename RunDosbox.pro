@@ -6,9 +6,13 @@
 
 QT       += core gui
 
+RC_FILE = RunDosbox.rc
+
+static:win32:QMAKE_LFLAGS += -static-libgcc
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = RunDosbox
+TARGET = RunTbProg
 TEMPLATE = app
 
 

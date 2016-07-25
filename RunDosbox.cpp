@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <QDir>
 #include <QFile>
+#include <QProcess>
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
@@ -40,7 +41,8 @@ QString Dialog::createIconTab()
                    "<meta name='qrichtext' content='1' />\n"
                    "%1"
                    "</head>\n"
-                   "<body><div class='main'><table width='100%' border='0' cellspacing='1'>\n").arg(sCss);
+                   "<body>\n"
+                   "<table width='100%' border='0' cellspacing='1'>\n").arg(sCss);
 
     for (int i = 0; i < m_slTbFiles.size(); i++)
     {
@@ -50,8 +52,8 @@ QString Dialog::createIconTab()
         }
 
         html += "<td align='center'>";
-        html += QString("<a href='?name=%1'><img src=':/icons/exe' width='64' height='64' alt='icon' /><br />").arg(QString(QUrl::toPercentEncoding(m_slTbFiles.at(i))));
-        html += m_slTbFiles.at(i) + "</a></td>";
+        html += QString("<a href='?name=%1'><img src=':/icons/exe' width='64' height='64' alt='icon' /><br /><b>").arg(QString(QUrl::toPercentEncoding(m_slTbFiles.at(i))));
+        html += m_slTbFiles.at(i) + "</b></a></td>";
 
         if (i % 2)
         {
@@ -64,7 +66,7 @@ QString Dialog::createIconTab()
         html += "<td>&nbsp;</td></tr>\n";
     }
 
-    html += "</table></div></body></html>";
+    html += "</table></body></html>";
 
     ui->textBrowser->setHtml(html);
     return html;
@@ -74,12 +76,12 @@ void Dialog::on_textBrowser_anchorClicked(const QUrl &arg1)
 {
     QString fName = QString("%1/%2%3").arg(m_sBaseFolder).arg(DOS_EXE_FILES).arg(QString(arg1.encodedQueryItemValue("name")));
 #if (defined _WIN32 || defined _WIN64)
+    fName.replace("/", "\\");
     QString cmd   = QString("%1/%2").arg(m_sBaseFolder).arg(QString(DOS_BOX_CMD).arg(fName));
 #else
     QString cmd   = QString(DOS_BOX_CMD).arg(fName);
 #endif
-
-    QProcess::execute(cmd);
+    QProcess::startDetached(cmd);
 }
 
 void Dialog::scanForFiles()
@@ -91,6 +93,5 @@ void Dialog::scanForFiles()
     filters << "*.exe" << "*.EXE";
     baseDir.setNameFilters(filters);
     m_slTbFiles = baseDir.entryList();
-
     createIconTab();
 }

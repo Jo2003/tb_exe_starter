@@ -4,12 +4,11 @@
 #include <QDialog>
 #include <QString>
 #include <QStringList>
-#include <QProcess>
 #include <QUrl>
 
 #define DOS_EXE_FILES "tb_files/"
 #if (defined _WIN32 || defined _WIN64)
-    #define DOS_BOX_CMD   "dosbox/dosbox.exe -exit -noconsole -c \"keyb none 808\" \"%1\""
+    #define DOS_BOX_CMD   "dosbox/dosbox.exe -exit -c \"keyb none 808\" \"%1\""
 #else
     #define DOS_BOX_CMD   "dosbox -exit -c \"keyb none 808\" \"%1\""
 #endif
