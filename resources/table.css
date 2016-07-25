@@ -1,0 +1,18 @@
+table {
+    background-color: #036;
+}
+
+td {
+    background-color: white;
+    padding: 10px;
+}
+
+.main {
+    padding: 20px;
+    margin: 20px;
+}
+
+a:link, a:visited {
+    text-decoration: none;
+    color: #036;
+}

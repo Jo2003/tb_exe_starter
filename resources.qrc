@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file alias="exe">resources/dos-exe-icon.png</file>
+    </qresource>
+    <qresource prefix="/text">
+        <file alias="table.css">resources/table.css</file>
+    </qresource>
+</RCC>
